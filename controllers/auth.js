@@ -11,20 +11,21 @@ const crearUsuario = async (req, res= response) => {
 
   try{
     
-    const existeEmail = await Usuario.findOne({ email:email });
+    //const existeEmail = await Usuario.findOne({ email:email });
+    const existeEmail =await  Usuario.findOne({email:email})
+
 
     if(existeEmail){
-        return res.status(400).json({
-            ok:false,
-            msg: "El correo ya esta registrado"
-        })
+      return res.status(400).json({
+        ok:false,
+        msg: 'El correo ya esta registrado'
+      })
     }
 
     const usuario= new Usuario(req.body);
 
-    //Encriptar contraseña;
-    const salt = bcrypt.genSaltSync();
-    usuario.password =bcrypt.hashSync(password,salt);
+    const salt=bcrypt.genSaltSync();
+    usuario.password=bcrypt.hashSync( password, salt)
 
 
     await usuario.save();
@@ -71,7 +72,7 @@ const login = async (req, res= response) => {
         //ValidarPassword
         const validPassword = bcrypt.compareSync(password,usuarioDB.password);
 
-        if(!validPassword){//Contrasela incorrecta
+        if(!validPassword){//Contraseña incorrecta
             return res.status(400).json({
                 ok:false,
                 msg: "Contraseña incorrecta"
@@ -103,14 +104,13 @@ const login = async (req, res= response) => {
 const renewToken = async (req,res = response)=> {
 
   //const uid del usuario
-  //GENERAR UN NUEVOJWT, gwenerarJWT...uid...
+  const uid= req.uid;
+
+  //Genera un nuevo token con el uid del usuario
+  const token= await  generarJWT(uid);
+  
   //Obtener el usuario por el UID, Usuario.findById...
- 
-  const uid = req.uid;
-
-  const token = await generarJWT( uid );//Genera un nuevo token con el uid del usuario
-
-  const usuario = await Usuario.findById({ _id:uid });
+  const usuario= await Usuario.findById( uid );
 
   res.json({
     ok:true,
@@ -118,6 +118,7 @@ const renewToken = async (req,res = response)=> {
     token 
   })
 }
+
 
 
 

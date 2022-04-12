@@ -12,6 +12,7 @@ const app = express();
 
 //Lectura y parseo del body
 
+//app.use(express.json());
 app.use(express.json());
 
 // Node Server
@@ -29,6 +30,8 @@ app.use( express.static( publicPath ) );
 
 //Mis rutas
 app.use('/api/login',require('./routes/auth'));
+app.use('/api/usuarios',require('./routes/usuarios'));
+app.use('/api/mensajes',require('./routes/mensajes'));
 
 server.listen( process.env.PORT, ( err ) => {
 

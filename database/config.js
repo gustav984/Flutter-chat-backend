@@ -13,7 +13,8 @@ const dbConnection= async()=>{
       
     });
 
-    console.log('DB ONLINE');
+
+    console.log('Init db config');
 
   }catch(error){
       console.log(error);
@@ -25,5 +26,5 @@ const dbConnection= async()=>{
 }
 
 module.exports={
-    dbConnection
+  dbConnection
 }

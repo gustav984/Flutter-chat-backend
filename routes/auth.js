@@ -24,8 +24,8 @@ router.post('/new',[
 //validar email, password
 
 router.post('/',[ 
-    check('email','En email es obligatorio').not().isEmpty(),
-    check('email','En email es incorrecto').isEmail(),
+    check('email','El email es obligatorio').not().isEmpty(),
+    check('email','El email es incorrecto').isEmail(),
     check('password','En password es obligatorio').not().isEmpty(),
     validarCampos
 ],login);
